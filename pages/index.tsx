@@ -1,9 +1,22 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
+
+export async function getStaticProps({ locale }: any) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
+}
 
 const Home: NextPage = () => {
+
+  const { t: translate } = useTranslation('common');
+
   return (
     <div className={styles.container}>
       <Head>
@@ -14,7 +27,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          {translate('bemvindo')} <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
         <p className={styles.description}>
